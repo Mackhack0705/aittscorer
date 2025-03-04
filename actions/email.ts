@@ -29,7 +29,7 @@ export async function sendEmail({
   try {
     const [response] = await sgMail.send(message);
 
-    if (response.statusCode === 202) {
+    if (response.statusCode !== 202) {
       throw new Error(
         `SendGrid API returned status code ${response.statusCode}`
       );
@@ -39,7 +39,7 @@ export async function sendEmail({
       success: true,
       messageId: response.headers["x-message-id"],
     };
-    
+
   } catch (error) {
     console.error("Error sending email", error);
     return {
