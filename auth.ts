@@ -9,9 +9,11 @@ export const auth = betterAuth({
         provider: "mongodb",
     }),
     socialProviders: {
-        github: {
-            clientId: process.env.GITHUB_CLIENT_ID as string,
-            clientSecret: process.env.GITHUB_CLIENT_SECRETT as string,
+        google: {
+            enabled: true,
+            clientId: process.env.GOOGLE_CLIENT_ID as string,
+            clientSecret: process.env.GOOGLE_CLIENT_SECRET as string,
+            redirectURI: 'http://localhost:3000/api/auth/callback/google'
         }
     },
     plugins: [openAPI()],
@@ -33,4 +35,4 @@ export const auth = betterAuth({
     }
 } satisfies BetterAuthOptions);
 
-// export type Session = typeof auth.$Infer.Session;
+export type Session = typeof auth.$Infer.Session;

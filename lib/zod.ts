@@ -26,10 +26,10 @@ export const signUpSchema = object({
     path: ["confirmPassword"],
   });
 
-// export const signInSchema = object({
-//   email: getEmailSchema(),
-//   password: getPasswordSchema("password"),
-// });
+export const signInSchema = object({
+  email: getEmailSchema(),
+  password: getPasswordSchema("password"),
+});
 
 // export const forgotPasswordSchema = object({
 //   email: getEmailSchema(),
