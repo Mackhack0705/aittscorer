@@ -48,7 +48,8 @@ export default function SignIn() {
 					setPendingCredentials(true);
 				},
 				onSuccess: () => {
-                    router.push("/");
+                    console.log('hi');
+                    router.push("/game-form");
                     router.refresh();
 				},
 				onError: (ctx: ErrorContext) => {
@@ -72,7 +73,7 @@ export default function SignIn() {
                     setPendingGoogle(true);
                 },
                 onSuccess: async () => {
-                    router.push("/");
+                    router.push("/game-form");
                     router.refresh();
                 },
                 onError: (ctx: ErrorContext) => {

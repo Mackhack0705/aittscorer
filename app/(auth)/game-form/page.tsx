@@ -1,60 +1,49 @@
 "use client";
 
-import { useState } from "react";
+import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { useEffect } from "react";
-import { useRouter } from "next/router";
-import { auth } from "@/auth";
+import { useState } from "react";
 
-export default function Game() {
+export default function GameForm() {
+  const router = useRouter();
   const [players, setPlayers] = useState(1);
   const [winningScore, setWinningScore] = useState(11);
-  const router = useRouter();
 
-  useEffect(() => {
-    if (!auth.currentUser) {
-      router.push("/auth");
-    }
-  }, []);
-
-  const onStartGame = (gameDetails: { players: number; winningScore: number }) => {
-    router.push({
-      pathname: "/score",
-      query: gameDetails,
-    });
-  };
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    onStartGame({ players, winningScore });
+  const handleStartGame = () => {
+    router.push(`/scorer?players=${players}&winningScore=${winningScore}`);
   };
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-4">
-      <div>
-        <Label>Number of Players per Team</Label>
-        <select
-          value={players}
-          onChange={(e) => setPlayers(parseInt(e.target.value))}
-          className="w-full p-2 border rounded"
-        >
-          <option value={1}>1</option>
-          <option value={2}>2</option>
-        </select>
+    <div className="min-h-screen flex items-center justify-center bg-gray-100">
+      <div className="bg-white p-8 rounded-lg shadow-md w-96">
+        <h1 className="text-2xl font-bold mb-4">Game Setup</h1>
+        <div className="space-y-4">
+          <div>
+            <Label>Number of Players per Team</Label>
+            <select
+              value={players}
+              onChange={(e) => setPlayers(parseInt(e.target.value))}
+              className="w-full p-2 border rounded"
+            >
+              <option value={1}>1</option>
+              <option value={2}>2</option>
+            </select>
+          </div>
+          <div>
+            <Label>Winning Score</Label>
+            <Input
+              type="number"
+              value={winningScore}
+              onChange={(e) => setWinningScore(parseInt(e.target.value))}
+            />
+          </div>
+          <Button onClick={handleStartGame} className="w-full">
+            Start Game
+          </Button>
+        </div>
       </div>
-      <div>
-        <Label>Winning Score</Label>
-        <Input
-          type="number"
-          value={winningScore}
-          onChange={(e) => setWinningScore(parseInt(e.target.value))}
-        />
-      </div>
-      <Button type="submit" className="w-full">
-        Start Game
-      </Button>
-    </form>
+    </div>
   );
 }
